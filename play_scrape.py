@@ -3,15 +3,23 @@ import csv
 from bs4 import BeautifulSoup
 
 def parse_install_count(install_text):
+    install_text = install_text.strip().replace(',', '')
+
     if 'M' in install_text:
-        return int(install_text.replace('M+', '').replace(',', '')) * 1000000
+        num_installs = install_text.replace('M+', '')
+        if num_installs:
+            return int(num_installs) * 1000000
     elif 'B' in install_text:
-        return int(install_text.replace('B+', '').replace(',', '')) * 1000000000
-    else:
-        return int(install_text.replace(',', ''))
+        num_installs = install_text.replace('B+', '')
+        if num_installs:
+            return int(num_installs) * 1000000000
+    elif install_text.isdigit():
+        return int(install_text)
+
+    return 0  # Return 0 for invalid or empty install counts
 
 # Provide a list of search terms
-search_terms = ['chat', 'games', 'social', 'music', 'education','shopping', 'Entertainment','lifestyle','books','food','tools','sports','references']
+search_terms = ['chat', 'games', 'social', 'music', 'education', 'shopping', 'Entertainment', 'lifestyle', 'books', 'food', 'tools', 'sports', 'references']
 
 with open('app_data_combined.csv', 'w', newline='', encoding='utf-8') as csvfile:
     fieldnames = ['Search Term', 'App Name', 'App URL', 'Number of Installs']
@@ -56,4 +64,4 @@ with open('app_data_combined.csv', 'w', newline='', encoding='utf-8') as csvfile
                 if num_installs >= 100000000:  # Filter apps with installs <= 100 million
                     writer.writerow({'Search Term': search_term, 'App Name': app_name, 'App URL': full_app_link, 'Number of Installs': num_installs})
 
-print("Data has been saved to app_data_combined.csv")
+print("Data has been saved to app_data_NEW_combined.csv")
