@@ -64,4 +64,4 @@ with open('app_data_combined.csv', 'w', newline='', encoding='utf-8') as csvfile
                 if num_installs >= 100000000:  # Filter apps with installs <= 100 million
                     writer.writerow({'Search Term': search_term, 'App Name': app_name, 'App URL': full_app_link, 'Number of Installs': num_installs})
 
-print("Data has been saved to app_data_NEW_combined.csv")
+print("Data has been saved to app_data_combined.csv")
